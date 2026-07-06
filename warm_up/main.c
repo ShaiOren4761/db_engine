@@ -1,10 +1,15 @@
 # include <stdio.h>
 
-void func(int);
+struct myStruct {
+    int num;
+    char c;
+};
+
+
 
 int main() {
 
-    printf("Hello Worlds!\n"); //check sync with laptop..
+    printf("Hello Worlds!\n");
     return 0;
 }
 
