@@ -1,0 +1,14 @@
+#ifndef TYPES_H
+#define TYPES_H
+
+typedef enum {
+    BUILTIN_TYPE_UINT8,
+    BUILTIN_TYPE_UINT16,
+    BUILTIN_TYPE_UINT32,
+    BUILTIN_TYPE_UINT64,
+    BUILTIN_TYPE_UINT128,
+    BUILTIN_TYPE_INT32,
+    BUILTIN_TYPE_BOOL
+} db_builtin_type_t;
+
+#endif
