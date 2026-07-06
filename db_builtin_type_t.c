@@ -30,8 +30,3 @@ size_t db_builtin_type_size(db_builtin_type_t type) {
             return 0; // Unknown type
     }
 }
-
-int main() { // TODO = who the fuck makes a main function for builtin??? delete asap
-
-    return 0;
-}
