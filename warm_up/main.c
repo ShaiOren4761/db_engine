@@ -4,7 +4,7 @@ void func(int);
 
 int main() {
 
-    printf("Hello Worlds!\n");
+    printf("Hello Worlds!\n"); //check sync with laptop..
     return 0;
 }
 
