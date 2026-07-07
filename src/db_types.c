@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <db_types.h>
+#include "db_types.h"
 
 size_t db_builtin_type_size(db_builtin_type_t type) {
     switch(type){

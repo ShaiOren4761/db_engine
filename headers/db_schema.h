@@ -3,21 +3,24 @@
 
 #include "db_types.h"
 
-typedef struct {
+typedef struct __attribute__((packed)) {
     char name[128];
     db_builtin_type_t type;
     //size_t offset; 
     //size_t size;  
-} db_field_schema_t; //__attribute__((packed)) doesn't work in headers..?
+} db_field_schema_t;
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
     char name[128];
     db_field_schema_t fields[256]; //bigass table
     db_builtin_type_t* types;
     //size_t field_count; 
-    //size_t row_size; 
-} db_table_schema_t; //__attribute__((packed)) doesn't work in headers..?
+    size_t row_size; // TODO: Implement update and usage per field added to schema
+} db_table_schema_t;
+
+void db_destroy_table_schema(db_table_schema_t* schema);
+db_table_schema_t* db_create_table_schema(const char* table_name);
 
 
 #endif

@@ -1,7 +1,10 @@
 #include <stdio.h>
-#include <db_schema.h>
+#include <stdlib.h>
+#include <string.h>
+#include "db_schema.h"
 
-db_table_schema_t* db_create_table_schema_create(const char* table_name){
+
+db_table_schema_t* db_create_table_schema(const char* table_name){
     db_table_schema_t* schema = malloc(sizeof(db_table_schema_t));
     if (!schema) {
         fprintf(stderr, "Failed to allocate memory for table schema\n");
@@ -13,7 +16,7 @@ db_table_schema_t* db_create_table_schema_create(const char* table_name){
     return schema;
 }
 
-void db_table_schema_destroy(db_table_schema_t* schema){
+void db_destroy_table_schema(db_table_schema_t* schema){
     if (schema) {
         free(schema->types); // Deep destruction
         free(schema);
