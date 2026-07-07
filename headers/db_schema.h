@@ -2,6 +2,7 @@
 #define SCHEMA_H
 
 #include "db_types.h"
+#include <stdbool.h>
 
 typedef struct __attribute__((packed)) {
     char name[128];
@@ -21,6 +22,6 @@ typedef struct __attribute__((packed)){
 
 void db_destroy_table_schema(db_table_schema_t* schema);
 db_table_schema_t* db_create_table_schema(const char* table_name);
-
+bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type);
 
 #endif

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 #include "db_schema.h"
 
 
@@ -23,10 +24,6 @@ void db_destroy_table_schema(db_table_schema_t* schema){
     }
 }
 
-/* GPT Addition, necessary?
-bool db_table_schema_add_field(
-    db_table_schema_t* schema,
-    const char* field_name,
-    db_builtin_type_t type
-);
-*/
+bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
+    
+}
