@@ -10,8 +10,14 @@
 
 int main(){
 
-    db_table_schema_t* My_Table = db_create_table_schema("First_Table");
+    db_table_schema_t* My_Table = db_create_table_schema("First_Table"); //0 fields, 0 types, only name
+    
+    bool res = db_table_schema_add_field(My_Table, "ID", BUILTIN_TYPE_UINT32);
+    res = db_table_schema_add_field(My_Table, "age", BUILTIN_TYPE_UINT8);
+    res = db_table_schema_add_field(My_Table, "employed", BUILTIN_TYPE_BOOL);
+    res = db_table_schema_add_field(My_Table, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
 
+    print_table_properties(My_Table);
 
     return 0;
 }

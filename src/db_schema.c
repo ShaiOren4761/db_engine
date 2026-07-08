@@ -25,5 +25,22 @@ void db_destroy_table_schema(db_table_schema_t* schema){
 }
 
 bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
+    if (schema->field_count == 256) return false;
     
+    db_field_schema_t new_field;
+    strcpy(new_field.name, field_name);
+    new_field.type = type;
+    memcpy(schema->fields + (schema->field_count), &new_field, sizeof(db_field_schema_t)); 
+    schema->field_count++;
+    return true;
 }
+
+void print_table_properties(db_table_schema_t* table){
+    printf("table name: %s\n", table->name);
+    printf("fields:");
+    for (int i=0; i<table->field_count; i++){
+        printf(" %s |", table->fields[i].name);
+    }
+    printf("\n");
+}
+
