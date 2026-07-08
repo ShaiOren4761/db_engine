@@ -14,6 +14,7 @@ db_table_schema_t* db_create_table_schema(const char* table_name){
     strncpy(schema->name, table_name, sizeof(schema->name) - 1);
     schema->name[sizeof(schema->name) - 1] = '\0'; // Ensure null-termination
     schema->types = NULL; // Initialize types pointer to NULL
+    schema->row_size=0;
     return schema;
 }
 
@@ -32,6 +33,7 @@ bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name
     new_field.type = type;
     memcpy(schema->fields + (schema->field_count), &new_field, sizeof(db_field_schema_t)); 
     schema->field_count++;
+    schema->row_size += db_builtin_type_size(type);
     return true;
 }
 
@@ -41,6 +43,6 @@ void print_table_properties(db_table_schema_t* table){
     for (int i=0; i<table->field_count; i++){
         printf(" %s |", table->fields[i].name);
     }
-    printf("\n");
+    printf("\nrow size: %zu\n", table->row_size);
 }
 

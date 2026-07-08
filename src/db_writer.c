@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-db_table_buffer_writer_t* db_buffer_writer_create(db_table_schema_t* schema, char* buffer, size_t capacity){
+db_table_buffer_writer_t* db_buffer_writer_create(db_table_schema_t* schema, char* buffer /*, size_t capacity*/){
     db_table_buffer_writer_t* writer = malloc(sizeof(db_table_buffer_writer_t));
     if (!writer) {
         return NULL;
@@ -23,7 +23,6 @@ void db_buffer_writer_destroy(db_table_buffer_writer_t* writer) {
         free(writer);
     }
 }
-
 
 bool db_buffer_writer_write(db_table_buffer_writer_t* writer, void* row){
     memcpy(writer->buffer + writer->offset, row, writer->schema->row_size);
