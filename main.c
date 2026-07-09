@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "db_schema.h"
+#include "db_table.h"
+#include "db_field.h"
 #include "db_types.h"
 #include "db_writer.h"
 
@@ -18,26 +19,26 @@ void print_rows(char* buffer, int amount);
 int main(){
   
     // Create table
-    db_table_schema_t* My_Table = db_create_table_schema("First_Table"); //0 fields, 0 types, only name
+    db_table_schema_t* My_Table = db_schema_create_table("First_Table"); //0 fields, 0 types, only name
     
-    bool res = db_table_schema_add_field(My_Table, "ID", BUILTIN_TYPE_UINT32);
-    res = db_table_schema_add_field(My_Table, "age", BUILTIN_TYPE_UINT8);
-    res = db_table_schema_add_field(My_Table, "employed", BUILTIN_TYPE_BOOL);
-    res = db_table_schema_add_field(My_Table, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+    bool res = db_schema_table_add_field(My_Table, "ID", BUILTIN_TYPE_UINT32);
+    res = db_schema_table_add_field(My_Table, "age", BUILTIN_TYPE_UINT8);
+    res = db_schema_table_add_field(My_Table, "employed", BUILTIN_TYPE_BOOL);
+    res = db_schema_table_add_field(My_Table, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
 
-    print_table_properties(My_Table);
+    db_schema_table_print_properties(My_Table);
 
     // Write a row
     char* buffer = malloc(sizeof(row)*10); //a zillion memory please
 
     db_table_buffer_writer_t* writer;
-    writer = db_buffer_writer_create(My_Table, buffer);
+    writer = db_writer_buffer_create(My_Table, buffer);
 
     row r1 = {123456789, 99, true, 50};
     row r2 = {987654321, 22, false, 17};
     
-    db_buffer_writer_write(writer, &r1);
-    db_buffer_writer_write(writer, &r2);
+    db_writer_buffer_write(writer, &r1);
+    db_writer_buffer_write(writer, &r2);
     
     print_rows(buffer, 2);
     

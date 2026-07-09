@@ -13,9 +13,8 @@ typedef struct {
     // size_t rows_written; 
 } db_table_buffer_writer_t;
 
-db_table_buffer_writer_t* db_buffer_writer_create(db_table_schema_t* schema, char* buffer/*, size_t capacity*/);
-void db_buffer_writer_destroy(db_table_buffer_writer_t* writer);
-bool db_buffer_writer_write(db_table_buffer_writer_t* writer, void* row);
+db_table_buffer_writer_t* db_writer_buffer_create(db_table_schema_t* schema, char* buffer/*, size_t capacity*/);
+void db_writer_buffer_destroy(db_table_buffer_writer_t* writer);
+bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row);
 
 #endif
-
