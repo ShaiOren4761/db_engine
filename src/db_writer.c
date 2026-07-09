@@ -19,7 +19,6 @@ db_table_buffer_writer_t* db_buffer_writer_create(db_table_schema_t* schema, cha
 
 void db_buffer_writer_destroy(db_table_buffer_writer_t* writer) {
     if (writer) {
-        free(writer->buffer); // is this required or is free deep and smart?
         free(writer);
     }
 }

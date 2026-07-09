@@ -6,7 +6,7 @@
 #include "db_writer.h"
 
 
-typedef struct {
+typedef struct __attribute__((packed)){
     __uint32_t ID;
     __uint8_t age;
     bool employd;
@@ -16,7 +16,7 @@ typedef struct {
 void print_rows(char* buffer, int amount);
 
 int main(){
-
+  
     // Create table
     db_table_schema_t* My_Table = db_create_table_schema("First_Table"); //0 fields, 0 types, only name
     
@@ -40,7 +40,8 @@ int main(){
     db_buffer_writer_write(writer, &r2);
     
     print_rows(buffer, 2);
-
+    
+    free(writer->buffer);
     return 0;
 }
 
