@@ -2,7 +2,7 @@
 #define WRITER_H
 
 #include <stddef.h>
-#include "db_schema.h"
+#include "db_table.h"
 #include <stdbool.h>
 
 typedef struct {

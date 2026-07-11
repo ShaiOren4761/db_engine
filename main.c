@@ -17,7 +17,7 @@ typedef struct __attribute__((packed)){
 void print_rows(char* buffer, int amount);
 
 int main(){
-  
+
     // Create table
     db_table_schema_t* My_Table = db_schema_create_table("First_Table"); //0 fields, 0 types, only name
     
