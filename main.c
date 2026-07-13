@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "db_context.h"
 #include "db_table.h"
 #include "db_field.h"
 #include "db_types.h"
@@ -17,6 +18,19 @@ typedef struct __attribute__((packed)){
 void print_rows(char* buffer, int amount);
 
 int main(){
+
+    if (true){
+        db_context_schema_t* db = malloc(sizeof(db_context_schema_t));
+        strcpy(db->name, "my_db");
+
+        char s[32];
+        for (int i=0; i<8; i++){
+            snprintf(s, sizeof(s), "%d table", i);
+            db_context_add_table(db, s);
+        }
+        db_context_print_properties(db);
+        return 0;
+    }
 
     // Create table
     db_table_schema_t* My_Table = db_schema_create_table("First_Table"); //0 fields, 0 types, only name
@@ -46,7 +60,7 @@ int main(){
     return 0;
 }
 
-void print_rows(char* buffer, int amount){ //print x rows..
+void print_rows(char* buffer, int amount){ //print x rows.. TODO convert to reader
     row* r = (row*)buffer;
     for (int i=0; i < amount; i++){
         printf("row: %d -- ID: %d | age: %d | employed: %d | gender: %d\n", i, r->ID, r->age, r->employd, r->gender);
@@ -56,4 +70,4 @@ void print_rows(char* buffer, int amount){ //print x rows..
 
 
 // why press play when this fun little game can be played:
-//gcc main.c src/db_writer.c src/db_schema.c src/db_types.c -Iheaders -o db
+//gcc main.c src/db_context.c src/db_writer.c src/db_table.c src/db_field.c src/db_types.c -Iheaders -o db
