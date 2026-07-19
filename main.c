@@ -18,35 +18,35 @@ typedef struct __attribute__((packed)){
 void print_rows(char* buffer, int amount);
 
 int main(){
+ 
+    // Create db
+    db_context_schema_t* db = malloc(sizeof(db_context_schema_t));
+    strcpy(db->name, "my_db");
 
-    if (true){
-        db_context_schema_t* db = malloc(sizeof(db_context_schema_t));
-        strcpy(db->name, "my_db");
-
-        char s[32];
-        for (int i=0; i<8; i++){
-            snprintf(s, sizeof(s), "%d table", i);
-            db_context_add_table(db, s);
-        }
-        db_context_print_properties(db);
-        return 0;
+    // Create tables in db
+    char s[32];
+    for (int i=0; i<8; i++){
+        snprintf(s, sizeof(s), "table %d", i);
+        db_context_add_table(db, s);
     }
-
-    // Create table
-    db_table_schema_t* My_Table = db_schema_create_table("First_Table"); //0 fields, 0 types, only name
+    db_context_print_properties(db);
     
-    bool res = db_schema_table_add_field(My_Table, "ID", BUILTIN_TYPE_UINT32);
-    res = db_schema_table_add_field(My_Table, "age", BUILTIN_TYPE_UINT8);
-    res = db_schema_table_add_field(My_Table, "employed", BUILTIN_TYPE_BOOL);
-    res = db_schema_table_add_field(My_Table, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+    // Add fields to table 1
+    db_field_add_field_to_table(db->tables[0], "ID", BUILTIN_TYPE_UINT32);
+    db_field_add_field_to_table(db->tables[0], "age", BUILTIN_TYPE_UINT8);
+    db_field_add_field_to_table(db->tables[0], "employed", BUILTIN_TYPE_BOOL);
+    db_field_add_field_to_table(db->tables[0], "gender", BUILTIN_TYPE_UINT8); //256 options just in case
 
-    db_schema_table_print_properties(My_Table);
+    db_table_print_properties(db->tables[0]);
 
+    db_table_schema_t* table_1 = db_context_get_table(db, "table 1");
+    if (table_1) printf("%s\n", table_1->name);
+  
     // Write a row
     char* buffer = malloc(sizeof(row)*10); //a zillion memory please
 
     db_table_buffer_writer_t* writer;
-    writer = db_writer_buffer_create(My_Table, buffer);
+    writer = db_writer_buffer_create(table_1, buffer);
 
     row r1 = {123456789, 99, true, 50};
     row r2 = {987654321, 22, false, 17};

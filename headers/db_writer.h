@@ -8,9 +8,7 @@
 typedef struct {
     db_table_schema_t* schema;
     char* buffer;
-    // size_t capacity;
     size_t offset; 
-    // size_t rows_written; 
 } db_table_buffer_writer_t;
 
 db_table_buffer_writer_t* db_writer_buffer_create(db_table_schema_t* schema, char* buffer/*, size_t capacity*/);

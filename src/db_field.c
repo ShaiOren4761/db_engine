@@ -5,8 +5,8 @@
 #include "db_table.h"
 #include "db_field.h"
 
-
-bool db_schema_table_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
+// why is this method here? What method should a field even have?
+bool db_field_add_field_to_table(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
     if (schema->field_count == 256) return false;
     
     db_field_schema_t new_field;

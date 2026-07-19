@@ -13,8 +13,8 @@ typedef struct __attribute__((packed)) db_table_schema{
     size_t row_size; 
 } db_table_schema_t;
 
-db_table_schema_t* db_schema_create_table(const char* table_name);
-void db_schema_table_destroy(db_table_schema_t* schema);
-void db_schema_table_print_properties(db_table_schema_t* table);
+db_table_schema_t* db_table_schema_create(const char* table_name);
+void db_table_destroy(db_table_schema_t* schema);
+void db_table_print_properties(db_table_schema_t* table);
 
 #endif 

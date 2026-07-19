@@ -5,15 +5,18 @@
 #include <stdbool.h>
 #include <db_table.h>
 
+typedef struct db_table_schema db_table_schema_t;
+
 typedef struct {
     char name[128];
     __uint8_t num_of_entries;
     db_table_schema_t* tables[8]; 
-} db_context_schema_t; // Should I just name this db_context?
+} db_context_schema_t; // Should I just name this db_context_t?
 
 bool db_context_create_context(db_context_schema_t* db, const char* name);
 bool db_context_add_table(db_context_schema_t* db, const char* table_name);
 __uint8_t db_context_get_num_of_entries(db_context_schema_t* db);
 void db_context_print_properties(db_context_schema_t* db);
+db_table_schema_t* db_context_get_table(db_context_schema_t* db, char* table_name);
 
 #endif
