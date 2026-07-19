@@ -31,22 +31,25 @@ int main(){
     }
     db_context_print_properties(db);
     
-    // Add fields to table 1
-    db_field_add_field_to_table(db->tables[0], "ID", BUILTIN_TYPE_UINT32);
-    db_field_add_field_to_table(db->tables[0], "age", BUILTIN_TYPE_UINT8);
-    db_field_add_field_to_table(db->tables[0], "employed", BUILTIN_TYPE_BOOL);
-    db_field_add_field_to_table(db->tables[0], "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+    // Add fields to table 0
 
-    db_table_print_properties(db->tables[0]);
+    db_table_schema_t* table_0 = db_context_get_table(db, "table 0");
 
-    db_table_schema_t* table_1 = db_context_get_table(db, "table 1");
-    if (table_1) printf("%s\n", table_1->name);
+    db_field_add_field_to_table(table_0, "ID", BUILTIN_TYPE_UINT32);
+    db_field_add_field_to_table(table_0, "age", BUILTIN_TYPE_UINT8);
+    db_field_add_field_to_table(table_0, "employed", BUILTIN_TYPE_BOOL);
+    db_field_add_field_to_table(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+
+    db_table_print_properties(table_0);
+
+    
+    if (table_0) printf("table_get success, pointer: %s\n", table_0->name);
   
     // Write a row
     char* buffer = malloc(sizeof(row)*10); //a zillion memory please
 
     db_table_buffer_writer_t* writer;
-    writer = db_writer_buffer_create(table_1, buffer);
+    writer = db_writer_buffer_create(table_0, buffer);
 
     row r1 = {123456789, 99, true, 50};
     row r2 = {987654321, 22, false, 17};
@@ -56,7 +59,8 @@ int main(){
     
     print_rows(buffer, 2);
     
-    free(writer->buffer);
+    free(buffer);
+    db_writer_buffer_destroy(writer);
     return 0;
 }
 

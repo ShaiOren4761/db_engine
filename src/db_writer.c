@@ -4,12 +4,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-db_table_buffer_writer_t* db_writer_buffer_create(db_table_schema_t* schema, char* buffer){
+db_table_buffer_writer_t* db_writer_buffer_create(db_table_schema_t* table, char* buffer){
     db_table_buffer_writer_t* writer = malloc(sizeof(db_table_buffer_writer_t));
     if (!writer) {
         return NULL;
     }
-    writer->schema = schema;
+    writer->table = table;
     writer->buffer = buffer;
     writer->offset = 0;
     return writer;
@@ -22,6 +22,6 @@ void db_writer_buffer_destroy(db_table_buffer_writer_t* writer) {
 }
 
 bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row){
-    memcpy(writer->buffer + writer->offset, row, writer->schema->row_size);
-    writer->offset += writer->schema->row_size;    
+    memcpy(writer->buffer + writer->offset, row, writer->table->row_size);
+    writer->offset += writer->table->row_size;    
 }
