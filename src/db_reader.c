@@ -15,7 +15,9 @@ db_table_buffer_reader_t* db_buffer_reader_create(){
 
 void db_buffer_reader_read(db_table_buffer_reader_t* reader){
     void* buffer = reader->buffer; // table data
-    db_field_schema_t* fields = reader->schema->fields; // table field    
+    db_field_schema_t* fields = reader->schema->fields; // table field
+    size_t rows_amount = reader->schema->capacity;
+    
 }
 
 // void print_rows(char* buffer, int amount){ //print x rows.. TODO convert to reader
