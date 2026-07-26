@@ -28,6 +28,7 @@ void db_table_destroy(db_table_schema_t* schema){
 void db_table_print_properties(db_table_schema_t* table){
     if (!table) return;
     printf("table name: %s\n", table->name);
+    printf("fields count: %zu\n", table->field_count);
     printf("fields:");
     for (int i = 0; i < table->field_count; i++){
         printf(" %s |", table->fields[i].name);
