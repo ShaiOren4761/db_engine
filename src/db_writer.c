@@ -23,5 +23,6 @@ void db_writer_buffer_destroy(db_table_buffer_writer_t* writer) {
 
 bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row){
     memcpy(writer->buffer + writer->offset, row, writer->table->row_size);
-    writer->offset += writer->table->row_size;    
+    writer->offset += writer->table->row_size;
+    writer->table->capacity++;
 }

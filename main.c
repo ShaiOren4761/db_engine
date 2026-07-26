@@ -59,6 +59,8 @@ int main(){
     
     print_rows(buffer, 2);
     
+    printf("%d", table_0->capacity);
+
     free(buffer);
     db_writer_buffer_destroy(writer);
     return 0;
