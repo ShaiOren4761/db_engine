@@ -76,4 +76,4 @@ void print_rows(char* buffer, int amount){ //print x rows.. TODO convert to read
 
 
 // why press play when this fun little game can be played:
-//gcc main.c src/db_context.c src/db_writer.c src/db_table.c src/db_field.c src/db_types.c -Iheaders -o db
+//gcc main.c src/* -Iheaders -o db

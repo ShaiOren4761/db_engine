@@ -14,20 +14,17 @@ db_table_buffer_reader_t* db_buffer_reader_create(db_table_schema_t* table, char
     return reader;
 }
 
-void db_buffer_reader_read(db_table_buffer_reader_t* reader){
+void db_buffer_reader_read(db_table_buffer_reader_t* reader){ // TODO - look in header. Shit changed.
     void* buffer = reader->buffer; // table data
-    db_field_schema_t* fields = reader->table->fields; // table field
+    db_field_schema_t* fields = reader->table->fields; // table fields
     size_t fields_count = reader->table->field_count;
     size_t rows_amount = reader->table->capacity;
     
-    for (int i=0; i<rows_amount; i++){
-        for (int j=0; j<fields_count; j++){
-            printf("%s | ", fields[j].name);
-        }
-        printf("\n");
-    }
+    
 }
 
-void db_buffer_reader_destroy(){
-
+void db_buffer_reader_destroy(db_table_buffer_reader_t* reader){
+    if (reader != NULL) {
+        free(reader);
+    }
 }

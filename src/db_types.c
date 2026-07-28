@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include "db_types.h"
 
-size_t db_builtin_type_size(db_builtin_type_t type) {
-    switch(type){
+size_t db_builtin_type_size(db_builtin_type_t* type) {
+    switch(*type){
         case BUILTIN_TYPE_UINT8:
             return 1;
         case BUILTIN_TYPE_UINT16:
@@ -19,5 +19,26 @@ size_t db_builtin_type_size(db_builtin_type_t type) {
             return 1;
         default:
             return 0; // Unknown type
+    }
+}
+
+const char* db_types_toString_type(db_builtin_type_t* type){
+    switch(*type){
+        case BUILTIN_TYPE_UINT8:
+            return "";
+        case BUILTIN_TYPE_UINT16:
+            return "";
+        case BUILTIN_TYPE_UINT32:
+            return "";
+        case BUILTIN_TYPE_UINT64:
+            return "";
+        case BUILTIN_TYPE_UINT128:
+            return "";
+        case BUILTIN_TYPE_INT32:
+            return "";
+        case BUILTIN_TYPE_BOOL:
+            return "";
+        default:
+            return ""; // Unknown type
     }
 }
