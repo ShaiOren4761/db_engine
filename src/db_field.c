@@ -14,7 +14,7 @@ bool db_field_add_field_to_table(db_table_schema_t* schema, const char* field_na
     new_field.type = type;
     memcpy(schema->fields + (schema->field_count), &new_field, sizeof(db_field_schema_t)); 
     schema->field_count++;
-    schema->row_size += db_builtin_type_size(type);
+    schema->row_size += db_builtin_type_size(&type);
     return true;
 }
 

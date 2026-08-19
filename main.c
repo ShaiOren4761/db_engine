@@ -42,12 +42,13 @@ int main(){
 
     db_table_print_properties(table_0);
   
-    // Write a row
+    // Make memory for rows
     char* buffer_table_0 = malloc(sizeof(row)*10); //a zillion memory please
 
     db_table_buffer_writer_t* writer;
     writer = db_writer_buffer_create(table_0, buffer_table_0);
-
+    
+    // write rows
     row r1 = {123456789, 99, true, 50};
     row r2 = {987654321, 22, false, 17};
     
@@ -56,17 +57,20 @@ int main(){
     
     print_rows(buffer_table_0, 2);
     
-    printf("field amount in %s: %zu\n", table_0->name, table_0->capacity);
+    printf("field amount in %s: %zu\n", table_0->name, table_0->records);
 
+    // READER TESTING
     db_table_buffer_reader_t* reader = db_buffer_reader_create(table_0, buffer_table_0);
-    db_buffer_reader_read(reader);
+    //db_buffer_reader_read(reader);
+    void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
+    print_rows((char*)row_pointer, 1);
 
     free(buffer_table_0);
     db_writer_buffer_destroy(writer);
     return 0;
 }
 
-void print_rows(char* buffer, int amount){ //print x rows.. TODO convert to reader
+void print_rows(char* buffer, int amount){ //print x rows.. for row example
     row* r = (row*)buffer;
     for (int i=0; i < amount; i++){
         printf("row: %d -- ID: %d | age: %d | employed: %d | gender: %d\n", i, r->ID, r->age, r->employd, r->gender);

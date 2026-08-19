@@ -11,7 +11,7 @@ typedef struct __attribute__((packed)) db_table_schema{
     db_builtin_type_t* types;
     size_t field_count;
     size_t row_size;
-    size_t capacity; // how many rows in this talbe
+    size_t records; // how many rows in this talbe
 } db_table_schema_t;
 
 db_table_schema_t* db_table_schema_create(const char* table_name);
