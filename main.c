@@ -18,64 +18,79 @@ typedef struct __attribute__((packed)){
 void print_rows(char* buffer, int amount);
 
 int main(){
- 
+    
+    
     // Create db
     db_context_schema_t* db = malloc(sizeof(db_context_schema_t));
     strcpy(db->name, "my_db");
 
     // Create tables in db
-    char s[32];
-    for (int i=0; i<8; i++){
-        snprintf(s, sizeof(s), "table %d", i);
-        db_context_add_table(db, s);
-    }
-    //db_context_print_properties(db);
+        char s[32];
+        for (int i=0; i<8; i++){
+            snprintf(s, sizeof(s), "table_%d", i);
+            db_context_add_table(db, s);
+        }
+        //db_context_print_properties(db);
+
+    // Add fields to table_0 && table_1
+        
+        db_table_schema_t* table_0 = db_context_get_table(db, db->tables[0]->name);
+
+        db_field_add_field_to_table(table_0, "ID", BUILTIN_TYPE_UINT32);
+        db_field_add_field_to_table(table_0, "age", BUILTIN_TYPE_UINT8);
+        db_field_add_field_to_table(table_0, "employed", BUILTIN_TYPE_BOOL);
+        db_field_add_field_to_table(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+
+        db_table_print_properties(table_0);
+
+        db_table_schema_t* table_1 = db_context_get_table(db, db->tables[1]->name);
+
+        db_field_add_field_to_table(table_1, "ID", BUILTIN_TYPE_UINT32);
+        db_field_add_field_to_table(table_1, "age", BUILTIN_TYPE_UINT8);
+        db_field_add_field_to_table(table_1, "employed", BUILTIN_TYPE_BOOL);
+        db_field_add_field_to_table(table_1, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+
+        db_table_print_properties(table_1);
+        
+    // Make memory for rows in table_0 and table_1
+        char* buffer_table_0 = malloc(sizeof(row)*10); //a zillion memory please
+        char* buffer_table_1 = malloc(sizeof(row)*10); //a zillion memory please
     
-    // Add fields to table 0
-
-    db_table_schema_t* table_0 = db_context_get_table(db, "table 0");
-
-    db_field_add_field_to_table(table_0, "ID", BUILTIN_TYPE_UINT32);
-    db_field_add_field_to_table(table_0, "age", BUILTIN_TYPE_UINT8);
-    db_field_add_field_to_table(table_0, "employed", BUILTIN_TYPE_BOOL);
-    db_field_add_field_to_table(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
-
-    db_table_print_properties(table_0);
-  
-    // Make memory for rows
-    char* buffer_table_0 = malloc(sizeof(row)*10); //a zillion memory please
-
-    db_table_buffer_writer_t* writer;
-    writer = db_writer_buffer_create(table_0, buffer_table_0);
     
     // write rows
-    row r1 = {123456789, 99, true, 50};
-    row r2 = {987654321, 22, false, 17};
+        db_table_buffer_writer_t* writer;
+        writer = db_writer_buffer_create(table_0, buffer_table_0);
     
-    db_writer_buffer_write(writer, &r1);
-    db_writer_buffer_write(writer, &r2);
-    
-    print_rows(buffer_table_0, 2);
-    
-    printf("field amount in %s: %zu\n", table_0->name, table_0->records);
-
+        row r1 = {123456789, 99, true, 50};
+        row r2 = {987654321, 22, false, 17};
+        
+        db_writer_buffer_write(writer, &r1);
+        db_writer_buffer_write(writer, &r2);
+        
+        print_rows(buffer_table_0, 2);
+        
     // READER TESTING
-    db_table_buffer_reader_t* reader = db_buffer_reader_create(table_0, buffer_table_0);
-    //db_buffer_reader_read(reader);
-    void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
-    print_rows((char*)row_pointer, 1);
+        db_table_buffer_reader_t* reader_0 = db_buffer_reader_create(table_0, buffer_table_0);
+        db_buffer_reader_read(reader_0, (char*)(table_1), 1, 0);
+        //void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
+        print_rows(buffer_table_1, 1);
 
-    free(buffer_table_0);
-    db_writer_buffer_destroy(writer);
+
+    // No memory leaks in this mofo
+        free(buffer_table_0);
+        free(buffer_table_1);
+        db_writer_buffer_destroy(writer);
+
     return 0;
 }
 
-void print_rows(char* buffer, int amount){ //print x rows.. for row example
+void print_rows(char* buffer, int amount){ //print x rows.. for row type example
     row* r = (row*)buffer;
     for (int i=0; i < amount; i++){
         printf("row: %d -- ID: %d | age: %d | employed: %d | gender: %d\n", i, r->ID, r->age, r->employd, r->gender);
         r++;
     }
+    printf("\n");
 }
 
 

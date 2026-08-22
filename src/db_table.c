@@ -33,5 +33,5 @@ void db_table_print_properties(db_table_schema_t* table){
     for (int i = 0; i < table->field_count; i++){
         printf(" %s |", table->fields[i].name);
     }
-    printf("\nrow size: %zu\n", table->row_size);
+    printf("\nrow size: %zu\n\n", table->row_size);
 }

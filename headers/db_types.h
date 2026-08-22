@@ -14,6 +14,5 @@ typedef enum {
 } db_builtin_type_t;
 
 size_t db_builtin_type_size(db_builtin_type_t* type);
-const char* db_types_toString_type(db_builtin_type_t* type);
 
 #endif

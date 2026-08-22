@@ -2,6 +2,7 @@
 #include "db_reader.h"
 #include "db_table.h"
 #include <stdlib.h>
+#include <string.h>
 
 db_table_buffer_reader_t* db_buffer_reader_create(db_table_schema_t* table, char* buffer){
     db_table_buffer_reader_t* reader = malloc(sizeof(db_table_buffer_reader_t));
@@ -25,12 +26,24 @@ void* db_buffer_reader_get_pointer(db_table_buffer_reader_t* reader, size_t row_
     return row_pointer;
 } 
 
+/*
+Copy X rows into target address from a starting index
+*/
+void db_buffer_reader_read(db_table_buffer_reader_t* reader, char* dest, size_t row_amount, size_t start_index){
+    if (!reader->buffer) {
+        fprintf(stderr, "Source table null\n");
+    }
+    if (start_index >= reader->table->records || start_index+row_amount >= reader->table->records){
+        fprintf(stderr, "Row index out of bounds\n");
+    }
+    // Just how much parsing should I put into this? Or should I trust my own ability to not blow this up in main?
+    
+    char* source = reader->buffer; // table data
+    size_t row_size = reader->table->row_size;
 
-void db_buffer_reader_read(db_table_buffer_reader_t* reader, char* dest, size_t row_amount, size_t start_index){ // TODO..
-    void* buffer = reader->buffer; // table data
-    db_field_schema_t* fields = reader->table->fields; // table fields
-    size_t fields_count = reader->table->field_count;
-    size_t rows_amount = reader->table->records;
+    memcpy(dest, source, row_amount); // This can't be it. I am definitely silly. 
+    
+    
     
     
 }
