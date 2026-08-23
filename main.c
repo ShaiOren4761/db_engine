@@ -69,13 +69,18 @@ int main(){
         
         print_rows(table_0, buffer_table_0, 2);
         
-    // READER TESTING
+    // READER TESTING TODO - ADD GET_ROW EXAMPLE FOR MADMAX
+    /*
         db_table_buffer_reader_t* reader_table_0 = db_buffer_reader_create(table_0, buffer_table_0);
 
         db_buffer_reader_read(reader_table_0, buffer_table_1, 1, 1);
         //void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
         print_rows(table_1, buffer_table_1, 1);
+    */
 
+    // WRITER TO FILE TESTING
+        db_writer_to_bin_file(writer_table_0);
+            
 
     // No memory leaks in this mofo
         free(buffer_table_0);

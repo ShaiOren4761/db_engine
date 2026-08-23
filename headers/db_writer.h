@@ -14,5 +14,6 @@ typedef struct {
 db_table_buffer_writer_t* db_writer_buffer_create(db_table_schema_t* table, char* buffer/*, size_t capacity*/);
 void db_writer_buffer_destroy(db_table_buffer_writer_t* writer);
 bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row);
+FILE* db_writer_to_bin_file(db_table_buffer_writer_t* writer);
 
 #endif

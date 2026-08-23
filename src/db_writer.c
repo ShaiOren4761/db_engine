@@ -26,3 +26,23 @@ bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row){
     writer->offset += writer->table->row_size;
     writer->table->records++;
 }
+
+FILE* db_writer_to_bin_file(db_table_buffer_writer_t* writer){
+
+    char filename[133]; // 128 possibly long table name + ".txt" + '\0'
+    snprintf(filename, sizeof(filename), "%s.bin", writer->table->name);
+    FILE * fptr = fopen(filename, "wb");
+
+    if (!fptr){
+        fprintf(stderr, "ERROR: Unable to open new file");
+        return NULL;
+    }
+
+    // Insert table name
+        fputs(writer->table->name, fptr);
+    // Insert all rows
+        fwrite(writer->buffer, writer->table->row_size, writer->table->records, fptr);
+
+    return fptr;
+
+}
