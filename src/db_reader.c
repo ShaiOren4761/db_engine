@@ -17,7 +17,7 @@ db_table_buffer_reader_t* db_buffer_reader_create(db_table_schema_t* table, char
 
 void* db_buffer_reader_get_pointer(db_table_buffer_reader_t* reader, size_t row_index){
     if (row_index >= reader->table->records) {
-        fprintf(stderr, "Row index out of bounds\n");
+        fprintf(stderr, "ERROR: reader_get_pointer - Row index out of bounds\n");
         return NULL;
     }
 
@@ -29,22 +29,21 @@ void* db_buffer_reader_get_pointer(db_table_buffer_reader_t* reader, size_t row_
 /*
 Copy X rows into target address from a starting index
 */
-void db_buffer_reader_read(db_table_buffer_reader_t* reader, char* dest, size_t row_amount, size_t start_index){
-    if (!reader->buffer) {
-        fprintf(stderr, "Source table null\n");
+void db_buffer_reader_read(db_table_buffer_reader_t* reader_src, char* dest, size_t row_amount, size_t start_index){
+    if (!reader_src->buffer) {
+        fprintf(stderr, "ERROR: reader_read: Source table null\n");
+        return;
     }
-    if (start_index >= reader->table->records || start_index+row_amount >= reader->table->records){
-        fprintf(stderr, "Row index out of bounds\n");
+    if (start_index >= reader_src->table->records || start_index+row_amount > reader_src->table->records){
+        fprintf(stderr, "ERROR: reader_read: Row index out of bounds\n");
+        return;
     }
     // Just how much parsing should I put into this? Or should I trust my own ability to not blow this up in main?
-    
-    char* source = reader->buffer; // table data
-    size_t row_size = reader->table->row_size;
 
-    memcpy(dest, source, row_amount); // This can't be it. I am definitely silly. 
+    size_t row_size = reader_src->table->row_size;
+    char* source = reader_src->buffer + row_size*start_index; // table data + start position adjustment
     
-    
-    
+    memcpy(dest, source, row_amount*row_size);
     
 }
 
