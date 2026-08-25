@@ -4,7 +4,7 @@
 #include "db_table.h"
 
 bool db_context_create_context(db_context_schema_t* db, const char* name){
-    return NULL;
+    return NULL; // TODO: implement???
 }
 
 bool db_context_add_table(db_context_schema_t* db, const char* table_name){
@@ -12,7 +12,7 @@ bool db_context_add_table(db_context_schema_t* db, const char* table_name){
         fprintf(stderr, "DB %s is full, failed to add table\n", db->name);
         return NULL;
     }
-
+    // TODO: change to actual table being added, not a name + creation
     db_table_schema_t* new_table = db_table_schema_create(table_name);
     if (!new_table) return NULL;
 
@@ -22,8 +22,8 @@ bool db_context_add_table(db_context_schema_t* db, const char* table_name){
     return true;
 }
 
-__uint8_t db_context_get_num_of_entries(db_context_schema_t* db){
-    return 0;
+uint8_t db_context_get_num_of_entries(db_context_schema_t* db){
+    return 0; // TODO: implement, change to "num of .. " just nof. geeks use that. nof_tables.
 }
 
 void db_context_print_properties(db_context_schema_t* db){

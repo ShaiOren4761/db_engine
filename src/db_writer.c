@@ -27,7 +27,7 @@ bool db_writer_buffer_write(db_table_buffer_writer_t* writer, void* row){
     writer->table->records++;
 }
 
-FILE* db_writer_to_bin_file(db_table_buffer_writer_t* writer){
+FILE* db_writer_to_bin_file(db_table_buffer_writer_t* writer){ // TODO: Create db_file_writer_t, update db_table_writer_t
 
     char filename[144]; // "table_files/" + 128 possibly long table name + ".txt" + '\0'
     snprintf(filename, sizeof(filename), "table_files/%s.bin", writer->table->name);

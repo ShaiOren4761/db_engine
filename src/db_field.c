@@ -16,6 +16,6 @@ bool db_field_add_field_to_table(db_table_schema_t* schema, const char* field_na
     schema->field_count++;
     schema->row_size += db_builtin_type_size(&type);
     return true;
-}
+} // TODO: Move to schema_table, this action originates at table not field (dumbass)
 
 

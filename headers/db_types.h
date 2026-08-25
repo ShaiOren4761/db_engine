@@ -16,3 +16,4 @@ typedef enum {
 size_t db_builtin_type_size(db_builtin_type_t* type);
 
 #endif
+mkdi
