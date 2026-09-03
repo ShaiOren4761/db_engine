@@ -6,9 +6,6 @@
 #include <db_table.h>
 #include <stdint.h>
 
-// TODO: Don't opaque type! Include db_table! It sounds cool but you don't need it here.
-// You already did include table?????????????
-typedef struct db_table_schema db_table_schema_t;
 
 typedef struct {
     char name[128];
@@ -16,9 +13,9 @@ typedef struct {
     db_table_schema_t* tables[8]; 
 } db_context_schema_t; // Should I just name this db_context_t? TODO: YES
 
-bool db_context_create_context(db_context_schema_t* db, const char* name);
-bool db_context_add_table(db_context_schema_t* db, const char* table_name);
-uint8_t db_context_get_num_of_entries(db_context_schema_t* db);
+db_context_schema_t* db_context_create_context(const char* name);
+bool db_context_add_table(db_context_schema_t* db, db_table_schema_t* schema);
+uint8_t db_context_get_nof_entries(db_context_schema_t* db);
 void db_context_print_properties(db_context_schema_t* db);
 db_table_schema_t* db_context_get_table(db_context_schema_t* db, char* table_name);
 

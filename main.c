@@ -8,27 +8,27 @@
 #include "db_writer.h"
 #include "db_reader.h"
 
+// example row type for testing
 typedef struct __attribute__((packed)){
     __uint32_t ID;
     __uint8_t age;
     bool employd;
     __uint8_t gender;
 } row;
-
+// state your intentions stranger or I won't compile main.c
 void print_rows(db_table_schema_t* table, char* buffer, int amount);
 
 int main(){
-    
-    
+        
     // Create db
-    db_context_schema_t* db = malloc(sizeof(db_context_schema_t));
-    strcpy(db->name, "my_db");
+    db_context_schema_t* db = db_context_create_context("my_db");
 
     // Create tables in db
         char s[32];
         for (int i=0; i<8; i++){
             snprintf(s, sizeof(s), "table_%d", i);
-            db_context_add_table(db, s);
+            db_table_schema_t* temp_schema = db_table_schema_create(s);
+            db_context_add_table(db, temp_schema);
         }
         //db_context_print_properties(db);
 
@@ -36,21 +36,21 @@ int main(){
         
         db_table_schema_t* table_0 = db_context_get_table(db, db->tables[0]->name);
 
-            db_field_add_field_to_table(table_0, "ID", BUILTIN_TYPE_UINT32);
-            db_field_add_field_to_table(table_0, "age", BUILTIN_TYPE_UINT8);
-            db_field_add_field_to_table(table_0, "employed", BUILTIN_TYPE_BOOL);
-            db_field_add_field_to_table(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+            db_table_schema_add_field(table_0, "ID", BUILTIN_TYPE_UINT32);
+            db_table_schema_add_field(table_0, "age", BUILTIN_TYPE_UINT8);
+            db_table_schema_add_field(table_0, "employed", BUILTIN_TYPE_BOOL);
+            db_table_schema_add_field(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
 
-            db_table_print_properties(table_0);
+            db_table_schema_print_properties(table_0);
 
         db_table_schema_t* table_1 = db_context_get_table(db, db->tables[1]->name);
 
-            db_field_add_field_to_table(table_1, "ID", BUILTIN_TYPE_UINT32);
-            db_field_add_field_to_table(table_1, "age", BUILTIN_TYPE_UINT8);
-            db_field_add_field_to_table(table_1, "employed", BUILTIN_TYPE_BOOL);
-            db_field_add_field_to_table(table_1, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+            db_table_schema_add_field(table_1, "ID", BUILTIN_TYPE_UINT32);
+            db_table_schema_add_field(table_1, "age", BUILTIN_TYPE_UINT8);
+            db_table_schema_add_field(table_1, "employed", BUILTIN_TYPE_BOOL);
+            db_table_schema_add_field(table_1, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
 
-            db_table_print_properties(table_1);
+            db_table_schema_print_properties(table_1);
         
     // Make memory for rows in table_0 and table_1
         char* buffer_table_0 = malloc(sizeof(row)*10); //a zillion memory please
@@ -70,16 +70,16 @@ int main(){
         print_rows(table_0, buffer_table_0, 2);
         
     // READER TESTING TODO - ADD GET_ROW EXAMPLE FOR MADMAX
-    /*
+    
         db_table_buffer_reader_t* reader_table_0 = db_buffer_reader_create(table_0, buffer_table_0);
 
-        db_buffer_reader_read(reader_table_0, buffer_table_1, 1, 1);
+        db_buffer_reader_read(reader_table_0, buffer_table_1, 1, 1); // copy 2nd row into table_1 from table_0
         //void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
         print_rows(table_1, buffer_table_1, 1);
-    */
+    
 
     // WRITER TO FILE TESTING
-        db_writer_to_bin_file(writer_table_0);
+        //db_writer_to_bin_file(writer_table_0);
             
 
     // No memory leaks in this mofo

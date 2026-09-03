@@ -18,14 +18,14 @@ db_table_schema_t* db_table_schema_create(const char* table_name){
     return schema;
 }
 
-void db_table_destroy(db_table_schema_t* schema){
+void db_table_schema_destroy(db_table_schema_t* schema){
     if (schema) {
         free(schema->types); // Deep destruction
         free(schema);
     }
 }
 
-void db_table_print_properties(db_table_schema_t* table){
+void db_table_schema_print_properties(db_table_schema_t* table){
     if (!table) return;
     printf("table name: %s\n", table->name);
     printf("fields count: %zu\n", table->field_count);
@@ -35,3 +35,15 @@ void db_table_print_properties(db_table_schema_t* table){
     }
     printf("\nrow size: %zu\n\n", table->row_size);
 }
+
+bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
+    if (schema->field_count == 256) return false;
+    
+    db_field_schema_t new_field;
+    strcpy(new_field.name, field_name);
+    new_field.type = type;
+    memcpy(schema->fields + (schema->field_count), &new_field, sizeof(db_field_schema_t)); 
+    schema->field_count++;
+    schema->row_size += db_builtin_type_size(&type);
+    return true;
+} 

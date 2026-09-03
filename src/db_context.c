@@ -1,29 +1,39 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "db_context.h"
 #include "db_table.h"
 
-bool db_context_create_context(db_context_schema_t* db, const char* name){
-    return NULL; // TODO: implement???
+db_context_schema_t* db_context_create_context(const char* name){
+    db_context_schema_t* ctx = malloc(sizeof(db_context_schema_t));
+    if (!ctx) {
+        fprintf(stderr, "Failed to allocate memory for DB context\n");
+        return NULL;
+    }
+    strncpy(ctx->name, name, sizeof(ctx->name) - 1);
+    ctx->name[sizeof(ctx->name) - 1] = '\0'; // Ensure null-termination
+    ctx->num_of_entries=0;
+    return ctx;
 }
 
-bool db_context_add_table(db_context_schema_t* db, const char* table_name){
+bool db_context_add_table(db_context_schema_t* db, db_table_schema_t* schema){
     if (db->num_of_entries == 8){ //TODO yeah that's a const. that's bad.
         fprintf(stderr, "DB %s is full, failed to add table\n", db->name);
         return NULL;
     }
-    // TODO: change to actual table being added, not a name + creation
-    db_table_schema_t* new_table = db_table_schema_create(table_name);
-    if (!new_table) return NULL;
+    if (!schema){
+        fprintf(stderr, "null table cannot be added to DB\n");
+        return NULL;
+    }
 
-    db->tables[db->num_of_entries] = new_table;
+    db->tables[db->num_of_entries] = schema;
     db->num_of_entries++;
 
     return true;
 }
 
-uint8_t db_context_get_num_of_entries(db_context_schema_t* db){
-    return 0; // TODO: implement, change to "num of .. " just nof. geeks use that. nof_tables.
+uint8_t db_context_get_nof_entries(db_context_schema_t* db){
+    return db->num_of_entries; // Why did I create a function that's just a getter for a non-private member of context? THIS AIN'T OOP
 }
 
 void db_context_print_properties(db_context_schema_t* db){

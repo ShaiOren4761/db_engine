@@ -5,7 +5,7 @@
 #include "db_table.h"
 
 typedef struct {
-    db_table_schema_t* table;
+    db_table_schema_t* schema;
     char* buffer;
 } db_table_buffer_reader_t;
 

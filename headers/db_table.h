@@ -15,12 +15,14 @@ typedef struct __attribute__((packed)) db_table_schema{
 } db_table_schema_t;
 
 db_table_schema_t* db_table_schema_create(const char* table_name);
-void db_table_destroy(db_table_schema_t* schema);
-void db_table_print_properties(db_table_schema_t* table);
-// TODO: add the field addition function from db_field.h
+void db_table_schema_destroy(db_table_schema_t* schema);
+void db_table_schema_print_properties(db_table_schema_t* table);
+bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type);
+
+
 #endif 
 
-// TODO:
+// I dream:
 // db_field_schema_t currently supports builtin types only
 // Add support (somehow) for any type - generic type "db_type"? NOT YET
-// There is a way to this
+// There is a way to do this

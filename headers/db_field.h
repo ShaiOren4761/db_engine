@@ -11,6 +11,4 @@ typedef struct __attribute__((packed)){
     db_builtin_type_t type;
 } db_field_schema_t;
 
-bool db_field_add_field_to_table(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type);
-
 #endif
