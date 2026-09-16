@@ -17,7 +17,7 @@ db_context_schema_t* db_context_create_context(const char* name){
 }
 
 bool db_context_add_table(db_context_schema_t* db, db_table_schema_t* schema){
-    if (db->num_of_entries == 8){ //TODO yeah that's a const. that's bad.
+    if (db->num_of_entries == 8){ //TODO replace const?
         fprintf(stderr, "DB %s is full, failed to add table\n", db->name);
         return NULL;
     }

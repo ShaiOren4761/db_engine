@@ -15,7 +15,7 @@ typedef struct __attribute__((packed)){
     bool employd;
     __uint8_t gender;
 } row;
-// state your intentions stranger or I won't compile main.c
+
 void print_rows(db_table_schema_t* table, char* buffer, int amount);
 
 int main(){
@@ -39,7 +39,7 @@ int main(){
             db_table_schema_add_field(table_0, "ID", BUILTIN_TYPE_UINT32);
             db_table_schema_add_field(table_0, "age", BUILTIN_TYPE_UINT8);
             db_table_schema_add_field(table_0, "employed", BUILTIN_TYPE_BOOL);
-            db_table_schema_add_field(table_0, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+            db_table_schema_add_field(table_0, "gender", BUILTIN_TYPE_UINT8);
 
             db_table_schema_print_properties(table_0);
 
@@ -48,13 +48,13 @@ int main(){
             db_table_schema_add_field(table_1, "ID", BUILTIN_TYPE_UINT32);
             db_table_schema_add_field(table_1, "age", BUILTIN_TYPE_UINT8);
             db_table_schema_add_field(table_1, "employed", BUILTIN_TYPE_BOOL);
-            db_table_schema_add_field(table_1, "gender", BUILTIN_TYPE_UINT8); //256 options just in case
+            db_table_schema_add_field(table_1, "gender", BUILTIN_TYPE_UINT8);
 
             db_table_schema_print_properties(table_1);
         
     // Make memory for rows in table_0 and table_1
-        char* buffer_table_0 = malloc(sizeof(row)*10); //a zillion memory please
-        char* buffer_table_1 = malloc(sizeof(row)*10); //a zillion memory please
+        char* buffer_table_0 = malloc(sizeof(row)*10); 
+        char* buffer_table_1 = malloc(sizeof(row)*10);
     
     
     // write rows
@@ -69,7 +69,7 @@ int main(){
         
         print_rows(table_0, buffer_table_0, 2);
         
-    // READER TESTING TODO - ADD GET_ROW EXAMPLE FOR MADMAX
+    // reader
     
         db_table_buffer_reader_t* reader_table_0 = db_buffer_reader_create(table_0, buffer_table_0);
 
@@ -82,7 +82,7 @@ int main(){
         //db_writer_to_bin_file(writer_table_0);
             
 
-    // No memory leaks in this mofo
+    // free()
         free(buffer_table_0);
         free(buffer_table_1);
         db_writer_buffer_destroy(writer_table_0);
@@ -101,5 +101,5 @@ void print_rows(db_table_schema_t* table, char* buffer, int amount){ //print x r
 }
 
 
-// why press play when this fun little game can be played:
-//gcc main.c src/* -Iheaders -o db
+// compile command
+// gcc main.c src/* -Iheaders -o db

@@ -5,5 +5,5 @@
 #include "db_table.h"
 #include "db_field.h"
 
-// why is there a C file for db_field if this mf is just 2 properties?
+// TODO remove c file?
 
