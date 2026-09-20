@@ -4,3 +4,4 @@ db
 table_files/
 todo.txt
 3rdparty/README.md
+.vscode/
