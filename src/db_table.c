@@ -15,6 +15,8 @@ db_table_schema_t* db_table_schema_create(const char* table_name){
     schema->name[sizeof(schema->name) - 1] = '\0'; // Ensure null-termination
     schema->types = NULL; // Initialize types pointer to NULL
     schema->row_size=0;
+    schema->field_count = 0;
+    schema->records = 0;
     return schema;
 }
 
@@ -26,14 +28,18 @@ void db_table_schema_destroy(db_table_schema_t* schema){
 }
 
 void db_table_schema_print_properties(db_table_schema_t* table){
-    if (!table) return;
+    if (!table) {
+        fprintf(stderr, "db_table_schema_print_properties: null table cannot be printed\n");
+        return;
+    }
     printf("table name: %s\n", table->name);
     printf("fields count: %zu\n", table->field_count);
     printf("fields:");
     for (int i = 0; i < table->field_count; i++){
         printf(" %s |", table->fields[i].name);
     }
-    printf("\nrow size: %zu\n\n", table->row_size);
+    printf("\nrow size: %zu", table->row_size);
+    printf("\nrecords: %zu\n\n", table->records);
 }
 
 bool db_table_schema_add_field(db_table_schema_t* schema, const char* field_name, db_builtin_type_t type){
