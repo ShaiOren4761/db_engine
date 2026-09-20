@@ -2,6 +2,7 @@
 #define TYPES_H
 
 #include <stddef.h>
+#include <stdbool.h>
 
 typedef enum {
     BUILTIN_TYPE_UINT8,
@@ -14,5 +15,7 @@ typedef enum {
 } db_builtin_type_t;
 
 size_t db_builtin_type_size(db_builtin_type_t* type);
+const char* db_builtin_type_to_name(db_builtin_type_t type);
+bool db_builtin_name_to_type(const char *name, db_builtin_type_t *out_type);
 
 #endif
