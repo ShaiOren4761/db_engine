@@ -7,9 +7,10 @@
 #include "db_types.h"
 #include "db_writer.h"
 #include "db_reader.h"
+#include "db_parser.h"
 
 // example row type for testing
-typedef struct __attribute__((packed)){
+typedef struct __attribute__((packed)) row_example_struct{
     __uint32_t ID;
     __uint8_t age;
     bool employd;
@@ -19,7 +20,7 @@ typedef struct __attribute__((packed)){
 void print_rows(db_table_schema_t* table, char* buffer, int amount);
 
 int main(){
-        
+    
     // Create db
     db_context_schema_t* db = db_context_create_context("my_db");
 
@@ -51,7 +52,8 @@ int main(){
             db_table_schema_add_field(table_1, "gender", BUILTIN_TYPE_UINT8);
 
             db_table_schema_print_properties(table_1);
-        
+
+
     // Make memory for rows in table_0 and table_1
         char* buffer_table_0 = malloc(sizeof(row)*10); 
         char* buffer_table_1 = malloc(sizeof(row)*10);
@@ -76,7 +78,22 @@ int main(){
         db_buffer_reader_read(reader_table_0, buffer_table_1, 1, 1); // copy 2nd row into table_1 from table_0
         //void* row_pointer = db_buffer_reader_get_pointer(reader, 1);
         print_rows(table_1, buffer_table_1, 1);
-    
+
+
+
+    // serde testing
+
+        // serialize table_0
+        char* serialized_table_0 = db_parser_table_to_json(reader_table_0, 2);
+
+        // de-serialize table_0 into table_0_de
+        db_table_schema_t* table_0_de = NULL;
+        char* buffer_table_0_de = NULL;
+        db_parser_json_to_table(serialized_table_0, &table_0_de, &buffer_table_0_de);
+            
+        printf("table_0_de properties and data: \n");
+        db_table_schema_print_properties(table_0_de);
+        print_rows(table_0_de, buffer_table_0_de, table_0_de->records);
 
     // WRITER TO FILE TESTING
         //db_writer_to_bin_file(writer_table_0);
